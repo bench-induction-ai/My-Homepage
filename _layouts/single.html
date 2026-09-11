@@ -47,7 +47,7 @@ layout: default
       <section class="page__content" itemprop="text">
         {{ content }}
 
-        {%- assign has_any_link = page.paperurl or page.slidesurl or page.bibtexurl or page.codeurl -%}
+        {%- assign has_any_link = page.paperurl or page.slidesurl or page.bibtexurl or page.codeurl or page.code_status -%}
 
         {%- if page.citation -%}
           <p style="font-size: smaller">
@@ -57,7 +57,8 @@ layout: default
             {%- if page.paperurl -%}{% unless first %} | {% endunless %}<a href="{{ page.paperurl }}">Download Paper</a>{% assign first = false %}{%- endif -%}
             {%- if page.slidesurl -%}{% unless first %} | {% endunless %}<a href="{{ page.slidesurl }}">Download Slides</a>{% assign first = false %}{%- endif -%}
             {%- if page.bibtexurl -%}{% unless first %} | {% endunless %}<a href="{{ page.bibtexurl }}">Download Bibtex</a>{% assign first = false %}{%- endif -%}
-            {%- if page.codeurl -%}{% unless first %} | {% endunless %}<a href="{{ page.codeurl }}" target="_blank" rel="noopener">Code (GitHub)</a>{% assign first = false %}{%- endif -%}
+            {%- if page.codeurl -%}{% unless first %} | {% endunless %}Code: <a href="{{ page.codeurl }}" target="_blank" rel="noopener">{{ page.code_status | default: "GitHub" }}</a>{% assign first = false %}
+            {%- elsif page.code_status -%}{% unless first %} | {% endunless %}Code: {{ page.code_status }}{% assign first = false %}{%- endif -%}
           </p>
         {%- elsif has_any_link -%}
           <p style="font-size: smaller">
@@ -65,7 +66,8 @@ layout: default
             {%- if page.paperurl -%}{% unless first %} | {% endunless %}<a href="{{ page.paperurl }}">Download Paper</a>{% assign first = false %}{%- endif -%}
             {%- if page.slidesurl -%}{% unless first %} | {% endunless %}<a href="{{ page.slidesurl }}">Download Slides</a>{% assign first = false %}{%- endif -%}
             {%- if page.bibtexurl -%}{% unless first %} | {% endunless %}<a href="{{ page.bibtexurl }}">Download Bibtex</a>{% assign first = false %}{%- endif -%}
-            {%- if page.codeurl -%}{% unless first %} | {% endunless %}<a href="{{ page.codeurl }}" target="_blank" rel="noopener">Code (GitHub)</a>{% assign first = false %}{%- endif -%}
+            {%- if page.codeurl -%}{% unless first %} | {% endunless %}Code: <a href="{{ page.codeurl }}" target="_blank" rel="noopener">{{ page.code_status | default: "GitHub" }}</a>{% assign first = false %}
+            {%- elsif page.code_status -%}{% unless first %} | {% endunless %}Code: {{ page.code_status }}{% assign first = false %}{%- endif -%}
           </p>
         {%- endif -%}
 
@@ -74,7 +76,7 @@ layout: default
 
       <footer class="page__meta">
         {% if site.data.ui-text[site.locale].meta_label %}
-          <h4 class="page__meta-title">{{ site.data.ui-text[site.locale].meta_label }}</h4>
+          <h4 class="page__meta-title">{{ site.data.ui-text[site.locale].meta_label | default: "Follow:" }}</h4>
         {% endif %}
         {% include page__taxonomy.html %}
       </footer>

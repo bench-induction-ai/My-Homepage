@@ -56,22 +56,27 @@
       <p>Recommended citation: {{ post.citation }}</p>
     {% endif %}
     
-    {% if post.paperurl or post.slidesurl or post.bibtexurl or post.codeurl %}
+    {% if post.paperurl or post.slidesurl or post.bibtexurl or post.codeurl or post.code_status %}
       <p>
+        {% assign first = true %}
         {% if post.paperurl %}
           <a href="{{ post.paperurl }}">Download Paper</a>
-          {% if post.slidesurl or post.bibtexurl or post.codeurl %} | {% endif %}
+          {% assign first = false %}
         {% endif %}
         {% if post.slidesurl %}
-          <a href="{{ post.slidesurl }}">Download Slides</a>
-          {% if post.bibtexurl or post.codeurl %} | {% endif %}
+          {% unless first %} | {% endunless %}<a href="{{ post.slidesurl }}">Download Slides</a>
+          {% assign first = false %}
         {% endif %}
         {% if post.bibtexurl %}
-          <a href="{{ post.bibtexurl }}">Download Bibtex</a>
-          {% if post.codeurl %} | {% endif %}
+          {% unless first %} | {% endunless %}<a href="{{ post.bibtexurl }}">Download Bibtex</a>
+          {% assign first = false %}
         {% endif %}
         {% if post.codeurl %}
-          <a href="{{ post.codeurl }}">GitHub</a>
+          {% unless first %} | {% endunless %}Code: <a href="{{ post.codeurl }}" target="_blank" rel="noopener">{{ post.code_status | default: "GitHub" }}</a>
+          {% assign first = false %}
+        {% elsif post.code_status %}
+          {% unless first %} | {% endunless %}Code: {{ post.code_status }}
+          {% assign first = false %}
         {% endif %}
       </p>
     {% endif %}
