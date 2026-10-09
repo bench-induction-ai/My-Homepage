@@ -76,5 +76,9 @@
       </p>
     {% endif %}
 
+    {% if post.collection == 'publications' and post.code_status %}
+      <p class="publication__code-status"><strong>Code:</strong> {{ post.code_status | escape }}</p>
+    {% endif %}
+
   </article>
 </div>

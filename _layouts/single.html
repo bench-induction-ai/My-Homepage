@@ -69,12 +69,16 @@ layout: default
           </p>
         {%- endif -%}
 
+        {% if page.collection == 'publications' and page.code_status %}
+          <p class="publication__code-status"><strong>Code:</strong> {{ page.code_status | escape }}</p>
+        {% endif %}
+
         {% if page.link %}<div><a href="{{ page.link }}" class="btn">{{ site.data.ui-text[site.locale].ext_link_label | default: "Direct Link" }}</a></div>{% endif %}
       </section>
 
       <footer class="page__meta">
         {% if site.data.ui-text[site.locale].meta_label %}
-          <h4 class="page__meta-title">{{ site.data.ui-text[site.locale].meta_label }}</h4>
+          <h4 class="page__meta-title">{{ site.data.ui-text[site.locale].meta_label | default: "" }}</h4>
         {% endif %}
         {% include page__taxonomy.html %}
       </footer>
